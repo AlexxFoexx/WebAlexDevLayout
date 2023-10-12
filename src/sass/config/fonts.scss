@@ -1,0 +1,9 @@
+/* Миксины для шрифтов */
+@import "./config/mixins.scss";
+
+/* Подключены всех форматов шрифтов */
+@include webfont("Noah-Thin","../fonts/Noah-Thin");
+@include webfont("Noah-Light","../fonts/Noah-Light");
+@include webfont("Noah-Regular","../fonts/Noah-Regular");
+@include webfont("Noah-Bold","../fonts/Noah-Bold");
+@include webfont("NoahText-Heavy","../fonts/NoahText-Heavy");

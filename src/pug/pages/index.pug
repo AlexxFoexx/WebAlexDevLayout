@@ -1,0 +1,12 @@
+extends ../layout/app.pug
+
+block append vars 
+    - var pageTitle = "Главная страница"
+
+block page
+    include ../chunk/header.pug
+    
+    main.main
+        h1.title #{pageTitle}
+
+    include ../chunk/footer.pug

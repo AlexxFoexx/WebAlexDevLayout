@@ -1,0 +1,9 @@
+{
+    "name": "AlexWebDev",
+    "version": "0.0.1",
+    "dependencies": {
+        "jquery": "^3.7.1",
+        "fancybox": "^3.5.7",
+        "swiper": "^4.3.3"
+    }
+}

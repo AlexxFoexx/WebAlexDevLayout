@@ -1,0 +1,41 @@
+/* Устройства Small (телефоны с горизонтальной ориентацией, 576 пикселей и выше) */
+@media (max-width: 576px) {
+    .header {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
+    .main {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        color: #000000;
+    }
+
+    .footer {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+    }
+}
+
+/* Устройства Medium (планшеты, 768 пикселей и выше) */
+@media (max-width: 768px) {
+    .main {
+        color: red;
+    }
+}
+
+/* Устройства Large (ноутбуки и компьютеры, 992px и выше) */
+@media (max-width: 992px) { 
+    .main {
+        color: #EC06E3;
+    }
+}
+
+/* Устройства X-Large (большие настольные компьютеры, 1200 пикселей и выше) */
+@media (max-width: 1200px) {
+    .main {
+        color: #2606EC;
+    }
+}

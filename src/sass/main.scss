@@ -1,0 +1,28 @@
+/*
+Author: Name
+Name project: Name-p
+*/
+
+/** Обнуление */
+@import "./config/reset";
+
+/**
+* Подключение шрифтов локально из папки "./src/fonts"
+*/
+@import "./config/fonts";
+
+/** Подключение переменных */
+@import "./config/vars";
+
+/** Header сайта */
+@import "./blocks/header";
+
+.title {
+    font-family: $base-font-family;
+}
+
+/** Footer сайта */
+@import "./blocks/footer";
+
+/** MediaQueries сайта */
+@import "./config/media";
