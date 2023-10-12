@@ -1,4 +1,4 @@
-# Gulp сборка AlexWebDev
+# Gulp сборка AlexWebDevLayout
 
 ## Должен быть установлен (глобально) Node.js, Gulp v4.0, Bower.
 
