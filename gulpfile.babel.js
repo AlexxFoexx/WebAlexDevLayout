@@ -57,7 +57,7 @@ const path = {
         fonts: "./build/fonts/"
     },
     watch: {
-        html: "./src/pug/**/*.pug",
+        html: "./src/pug/**/**/*.pug",
         css: "./src/sass/**/main.scss",
         js: "src/js/common.js",
         img: "src/img/**/*.+(jpg|jpeg|png|gif|ico)",
@@ -175,11 +175,12 @@ const server = () => {
     })
     gulp.watch("src/sass/**/*.scss", gulp.series(sassMain))
     gulp.watch("src/js/*.js", gulp.series(jsFile))
-    gulp.watch("src/pug/**/*.pug").on('change', browserSyncs.reload)
+    gulp.watch("src/pug/**/*.pug", gulp.series(pugFile))
 }
 
 // Задачи
 // export { pugFile, sassMain, jsFile, vendorJs, vendorCss, imageFile, zipFile };
+;
 
 const build = gulp.series(gulp.parallel(
     server,
