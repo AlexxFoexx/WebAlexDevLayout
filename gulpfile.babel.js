@@ -69,12 +69,12 @@ const path = {
         dest: "./"
     }
 
-}
+};
 
 // Удаление директории
 export const reset = () => {
     return deleteAsync(path.maninDest);
-}
+};
 
 // js файлы
 let jsFile = () => {
@@ -97,7 +97,7 @@ let jsFile = () => {
         }
     }))
     .pipe(gulp.dest(path.dest.js))
-}
+};
 
 // Обработка PUG
 let pugFile = () => {
@@ -106,7 +106,7 @@ let pugFile = () => {
         .pipe(pug())
         .pipe(gulp.dest(path.dest.html))
         .pipe(browserSyncs.stream());
-}
+};
 
 // Обработка SCSS
 let sassMain = () => {
@@ -120,7 +120,7 @@ let sassMain = () => {
     .pipe(size({ title: "main.min.css" }))
     .pipe(gulp.dest(path.dest.css))
     .pipe(browserSyncs.stream())
-}
+};
 
 let vendorCss = () => {
     return gulp.src(path.libs.css)
@@ -132,7 +132,7 @@ let vendorCss = () => {
     .pipe(cssNano())
     .pipe(size({ title: "vendor.min.css" }))
     .pipe(gulp.dest(path.dest.css))
-}
+};
 
 // Обработка JavaScript
 let vendorJs = () => {
@@ -148,14 +148,20 @@ let vendorJs = () => {
         .pipe(size({ title: "vendor.min.js" }))
         .pipe(terser())
         .pipe(gulp.dest(path.dest.js));
-}
+};
 
+// Изображения
 let imageFile = () => {
     return gulp.src(path.app.img)
         .pipe(plumber())
         .pipe(imgMin())
         .pipe(gulp.dest(path.dest.img));
-}
+};
+
+let fontsFile = () => {
+    return gulp.src(path.app.fonts)
+        .pipe(gulp.dest(path.dest.fonts))
+};
 
 // Создание
 let zipFile = () => (
@@ -177,10 +183,11 @@ const server = () => {
     gulp.watch("src/js/*.js", gulp.series(jsFile))
     gulp.watch("src/pug/**/*.pug", gulp.series(pugFile))
     gulp.watch("src/img/**/*.+(jpg|jpeg|png|gif|ico)", gulp.series(imageFile))
-}
+    gulp.watch("src/fonts/**/*", gulp.series(fontsFile))
+};
 
 // Задачи
-// export { pugFile, sassMain, jsFile, vendorJs, vendorCss, imageFile, zipFile };
+// export { pugFile, sassMain, jsFile, vendorJs, vendorCss, imageFile, fontsFile, zipFile };
 ;
 
 const build = gulp.series(gulp.parallel(
@@ -190,8 +197,9 @@ const build = gulp.series(gulp.parallel(
     sassMain, 
     jsFile, 
     vendorJs, 
-    vendorCss, 
-    zipFile 
+    vendorCss,
+    fontsFile,
+    zipFile
 ));
 
 
