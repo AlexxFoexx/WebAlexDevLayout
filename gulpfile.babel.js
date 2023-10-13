@@ -176,6 +176,7 @@ const server = () => {
     gulp.watch("src/sass/**/*.scss", gulp.series(sassMain))
     gulp.watch("src/js/*.js", gulp.series(jsFile))
     gulp.watch("src/pug/**/*.pug", gulp.series(pugFile))
+    gulp.watch("src/img/**/*.+(jpg|jpeg|png|gif|ico)", gulp.series(imageFile))
 }
 
 // Задачи
