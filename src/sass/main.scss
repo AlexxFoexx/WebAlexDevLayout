@@ -21,10 +21,6 @@ Name project: Name-p
 /** Основные стили */
 @import "./config/common";
 
-.title {
-    font-family: $base-font-family;
-}
-
 /** Footer сайта */
 @import "./blocks/footer";
 

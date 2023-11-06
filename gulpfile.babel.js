@@ -18,6 +18,11 @@ import concat from "gulp-concat";
 
 import imgMin from "gulp-imagemin";
 
+import gulpSvgSprite from "gulp-svg-sprite";
+import gulpSvgMin from "gulp-svgmin";
+import gulpCheerio from "gulp-cheerio";
+import gulpReplace from "gulp-replace";
+
 import size from "gulp-size";
 import rename from "gulp-rename";
 import zip from "gulp-zip";
@@ -54,6 +59,7 @@ const path = {
         css: "./build/css/",
         js: "./build/js/",
         img: "./build/img/",
+        svg: "./build/svg/",
         fonts: "./build/fonts/"
     },
     watch: {
@@ -93,10 +99,11 @@ let jsFile = () => {
     .pipe(sourceMaps.write("./maps/", {
         mapFile: function(mapFilePath) {
           // source map files are named *.map instead of *.js.map
-        return mapFilePath.replace('.js.map', '.map');
+            return mapFilePath.replace('.js.map', '.map')
         }
     }))
     .pipe(gulp.dest(path.dest.js))
+    .pipe(browserSyncs.stream());
 };
 
 // Обработка PUG
@@ -147,7 +154,8 @@ let vendorJs = () => {
         }))
         .pipe(size({ title: "vendor.min.js" }))
         .pipe(terser())
-        .pipe(gulp.dest(path.dest.js));
+        .pipe(gulp.dest(path.dest.js))
+        .pipe(browserSyncs.stream());
 };
 
 // Изображения
@@ -155,12 +163,42 @@ let imageFile = () => {
     return gulp.src(path.app.img)
         .pipe(plumber())
         .pipe(imgMin())
-        .pipe(gulp.dest(path.dest.img));
+        .pipe(gulp.dest(path.dest.img))
+        .pipe(browserSyncs.stream());
 };
 
+// Работа с svg изображениями
+let svgSpriteBuild = () => {
+    return gulp.src("./src/img/svg/*.svg")
+        .pipe(gulpSvgMin({
+            js2svg: {
+                pretty: true
+            }
+        }))
+        .pipe(gulpCheerio({
+            run: function ($) {
+                $("[fill]").removeAttr("fill");
+                $("[stroke]").removeAttr("stroke");
+                $("[style]").removeAttr("style");
+            },
+            parserOptions: {
+                xmlMode: true
+            }
+        }))
+        .pipe(gulpReplace("&gt;", ">"))
+        .pipe(gulpSvgSprite({
+            mode: {
+                inline: true,
+            }
+        }))
+        .pipe(gulp.dest("./build/img/"))
+};
+
+// Шрифты
 let fontsFile = () => {
     return gulp.src(path.app.fonts)
         .pipe(gulp.dest(path.dest.fonts))
+        .pipe(browserSyncs.stream());
 };
 
 // Создание
@@ -183,6 +221,7 @@ const server = () => {
     gulp.watch("src/js/*.js", gulp.series(jsFile))
     gulp.watch("src/pug/**/*.pug", gulp.series(pugFile))
     gulp.watch("src/img/**/*.+(jpg|jpeg|png|gif|ico)", gulp.series(imageFile))
+    gulp.watch("src/img/svg/*.svg", gulp.series(svgSpriteBuild))
     gulp.watch("src/fonts/**/*", gulp.series(fontsFile))
 };
 
@@ -194,6 +233,7 @@ const build = gulp.series(gulp.parallel(
     server,
     pugFile, 
     imageFile,
+    svgSpriteBuild,
     sassMain, 
     jsFile, 
     vendorJs, 

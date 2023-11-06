@@ -44,7 +44,11 @@
   },
   "dependencies": {
     "gifsicle": "^7.0.1",
-    "gulp-cli": "^2.3.0"
+    "gulp-cheerio": "^1.0.0",
+    "gulp-cli": "^2.3.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-svg-sprite": "^2.0.3",
+    "gulp-svgmin": "^4.1.0"
   },
   "type": "module"
 }

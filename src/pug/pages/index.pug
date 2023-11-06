@@ -1,12 +1,15 @@
 extends ../layout/app.pug
 
 block append vars 
-    - var pageTitle = "Главная страница"
+    - var pageTitle = "Тело страницы"
 
 block page
     include ../chunk/header.pug
     
     main.main
         h1.title #{pageTitle}
+
+        svg(class="icon icon-right")
+            use(xlink:href="./img/sprite.svg#right_icon")
 
     include ../chunk/footer.pug

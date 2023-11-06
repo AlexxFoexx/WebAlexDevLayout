@@ -1,1 +1,17 @@
 // Заголовки, общие БЄМ блоки и проче...
+.title {
+    font-family: $base-font-family;
+}
+
+.main {
+    height: 100vh;
+}
+
+// SVG icon
+.icon {
+    width: 80px;
+    height: 80px;
+    &-right {
+        fill: #000000;
+    }
+}
