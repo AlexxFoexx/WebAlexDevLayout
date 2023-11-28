@@ -47,6 +47,7 @@ const path = {
         css: [
             "./src/libs/fancybox/dist/jquery.fancybox.min.css",
             "./src/libs/swiper/dist/css/swiper.min.css"
+
         ],
         js: [
             "./src/libs/jquery/dist/jquery.min.js",
@@ -66,7 +67,7 @@ const path = {
         html: "./src/pug/**/**/*.pug",
         css: "./src/sass/**/main.scss",
         js: "src/js/common.js",
-        img: "src/img/**/*.+(jpg|jpeg|png|gif|ico)",
+        img: "src/img/**/*.+(jpg|jpeg|png|svg|gif|ico)",
         fonts: "./src/fonts/**/*"
     },
     zip: {
@@ -81,6 +82,7 @@ const path = {
 export const reset = () => {
     return deleteAsync(path.maninDest);
 };
+
 
 // js файлы
 let jsFile = () => {
@@ -167,7 +169,7 @@ let imageFile = () => {
         .pipe(browserSyncs.stream());
 };
 
-// Работа с svg изображениями
+// SVG Спрайт
 let svgSpriteBuild = () => {
     return gulp.src("./src/img/svg/*.svg")
         .pipe(gulpSvgMin({
@@ -188,11 +190,16 @@ let svgSpriteBuild = () => {
         .pipe(gulpReplace("&gt;", ">"))
         .pipe(gulpSvgSprite({
             mode: {
-                inline: true,
+                symbol: {
+                    inline: true,
+                    sprite: "../sprite.svg"
+                }
             }
         }))
-        .pipe(gulp.dest("./build/img/"))
+        .pipe(gulp.dest("./build/img/"));
 };
+
+
 
 // Шрифты
 let fontsFile = () => {
@@ -226,8 +233,7 @@ const server = () => {
 };
 
 // Задачи
-// export { pugFile, sassMain, jsFile, vendorJs, vendorCss, imageFile, fontsFile, zipFile };
-;
+//export { pugFile, sassMain, jsFile, vendorJs, vendorCss, imageFile, fontsFile, zipFile };
 
 const build = gulp.series(gulp.parallel(
     server,
@@ -242,5 +248,6 @@ const build = gulp.series(gulp.parallel(
     zipFile
 ));
 
+gulp.task('svgSpriteBuild', svgSpriteBuild);
 
 export default build;
